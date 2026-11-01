@@ -1,0 +1,551 @@
+/* Reference composition: a single dark CRT, with an image board beneath its glass. */
+:root {
+  --yellow: #fff000;
+  background: #000;
+  color: #fff;
+}
+body {
+  background: #000;
+}
+.portfolio {
+  width: 100%;
+  max-width: none;
+  min-height: 100svh;
+  height: 100svh;
+  padding: 0;
+  display: block;
+  overflow: hidden;
+}
+.outer-label,
+.console,
+.screen-status,
+.board-hint,
+.zoom-readout,
+.board-scribble {
+  display: none;
+}
+.television {
+  position: absolute;
+  inset: 2.5svh 3vw;
+  height: 95svh;
+  min-height: 0;
+  width: 94vw;
+  filter: none;
+}
+.crt-screen {
+  height: 100%;
+  border: 0;
+  border-radius: 6% / 10%;
+  background: #111;
+  box-shadow: none;
+  isolation: isolate;
+}
+.crt-screen:before {
+  display: none;
+}
+.crt-picture {
+  position: absolute;
+  inset: 0;
+  filter: url(#crt-signal);
+}
+.crt-definitions {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.crt-texture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 14;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.crt-lens {
+  inset: 0;
+  box-shadow: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    #00152f12 79%,
+    #0008 100%
+  );
+  border-radius: inherit;
+}
+.crt-lens i {
+  display: none;
+}
+.crt-glass {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 45%,
+    #0002 65%,
+    #0008 88%,
+    #000 100%
+  );
+  box-shadow:
+    inset 0 0 38px 16px #000d,
+    inset 1px 0 7px #0054a22a,
+    inset -1px 0 7px #26398722;
+  border: 0;
+  border-radius: inherit;
+}
+.crt-scanlines {
+  opacity: 0.2;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, #0008 2px 3px);
+  mix-blend-mode: multiply;
+}
+.board-world {
+  top: 50%;
+  left: 51.3%;
+}
+.identity {
+  left: 0;
+  top: 0;
+  width: min(46vw, 86svh);
+  height: auto;
+  aspect-ratio: 2;
+  transform: translate(-50%, -50%);
+  scale: 1;
+  color: inherit;
+}
+.identity > :not(.identity-trigger):not(h1):not(p) {
+  display: none;
+}
+.identity-trigger {
+  height: 100%;
+  width: 100%;
+  border: 0;
+  background: none;
+  outline-offset: 7px;
+  cursor: pointer;
+  border-radius: 2.5%;
+  overflow: hidden;
+  padding: 0;
+}
+.identity-trigger > span:first-child {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.identity-trigger .identity-open-hint {
+  display: none;
+}
+.identity .identity-art,
+.identity-art {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  background: none;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  transform: none;
+}
+.identity-art:before {
+  display: none;
+}
+.studio-artwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+.project-card {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  transform: translate(-50%, -50%);
+  filter: blur(0.55px) drop-shadow(3px 0 2px #004bff9a)
+    drop-shadow(-3px 0 2px #f02e246e);
+  overflow: visible;
+  min-width: 42px;
+  min-height: 44px;
+  cursor: pointer;
+  scale: 1;
+  transition: scale 0.25s ease-out;
+}
+.project-card:nth-of-type(n) {
+  margin: 0;
+}
+.project-card > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+}
+.project-card.preview-disc img {
+  border-radius: 50%;
+}
+.project-card:hover,
+.project-card:focus-visible {
+  scale: 1.035;
+  box-shadow: none;
+  filter: blur(0.3px) drop-shadow(3px 0 2px #004bff9a)
+    drop-shadow(-3px 0 2px #f02e246e);
+}
+.help-sticker {
+  width: clamp(58px, 6vw, 115px);
+  height: auto;
+  aspect-ratio: 1.2;
+  left: 1vw;
+  top: 2svh;
+  transform: rotate(-7deg);
+  background: none !important;
+  border: 0 !important;
+  outline: 0;
+  box-shadow: none !important;
+  padding: 0;
+  z-index: 25;
+}
+.help-sticker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.help-sticker:hover {
+  transform: rotate(3deg);
+}
+.help-sticker:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 5px;
+}
+.contact-sticker {
+  width: clamp(170px, 15.5vw, 300px);
+  height: auto;
+  aspect-ratio: 1.667;
+  right: -2.2vw;
+  bottom: -1svh;
+  transform: rotate(-4deg);
+  background: none;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  z-index: 25;
+}
+.contact-sticker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+.contact-sticker:hover {
+  transform: rotate(-1deg) scale(1.025);
+}
+.contact-sticker:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 5px;
+}
+.television:has(.teletext) .contact-sticker {
+  display: block;
+}
+.teletext {
+  background: #090909;
+  padding: 7svh 6vw 5svh;
+}
+.project-navigation {
+  margin-right: 15%;
+  min-height: 44px;
+}
+.board-broadcast {
+  position: absolute;
+  left: -38vw;
+  top: 55svh;
+  bottom: auto;
+  width: 76vw;
+  right: auto;
+  height: clamp(44px, 5vw, 85px);
+  transform: rotate(-1deg);
+  pointer-events: none;
+}
+.board-broadcast .ticker-tag {
+  font-size: clamp(24px, 3vw, 54px);
+  padding: 0.3em 0.6em;
+}
+.board-broadcast .ticker-track {
+  font-size: clamp(24px, 3vw, 54px);
+}
+.identity-expanded {
+  background: #000;
+  --look-x: 0;
+  --look-y: 0;
+  animation: none;
+}
+.identity-scene {
+  inset: 2.5svh 3vw;
+  border-radius: 6% / 10%;
+  background: #111;
+  container-type: normal;
+  transform-origin: 0 0;
+}
+.identity-expanded .identity-art {
+  position: absolute;
+  inset: -1%;
+  width: 102%;
+  height: 102%;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: url(#crt-signal);
+  transform: translate(calc(var(--look-x) * -8px), calc(var(--look-y) * -6px))
+    scale(1.01);
+  transition: transform 0.35s ease-out;
+}
+.identity-expanded .studio-artwork {
+  object-fit: cover;
+  object-position: center;
+}
+.scene-return {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  cursor: zoom-out;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.scene-return:focus-visible {
+  outline: 3px solid #fff000;
+  outline-offset: -8px;
+}
+.expanded-help {
+  position: fixed;
+  left: 4vw;
+  top: 4.5svh;
+}
+.expanded-contact {
+  position: fixed;
+  right: 0.8vw;
+  bottom: 1.5svh;
+}
+.scene-back {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  top: 20px;
+  right: 30px;
+  z-index: 30;
+}
+.scene-back:focus-visible {
+  width: auto;
+  height: 44px;
+  clip-path: none;
+  background: #000;
+  padding: 10px 20px;
+}
+.identity-leaving {
+  background: transparent;
+  animation: none;
+}
+.identity-leaving > .help-sticker,
+.identity-leaving > .contact-sticker,
+.identity-leaving > .scene-back {
+  visibility: hidden;
+}
+@media (max-width: 700px) and (orientation: portrait), (max-aspect-ratio: 4/5) {
+  .television {
+    inset: 0.8svh 2vw;
+    width: 96vw;
+    height: 98.4svh;
+    min-height: 0;
+  }
+  .crt-screen {
+    border-radius: 8% / 4%;
+  }
+  .identity {
+    width: min(52vw, 26svh);
+    height: 52svh;
+    aspect-ratio: auto;
+    transform: translate(-50%, -50%);
+    left: 0;
+    top: 0;
+    scale: 1;
+  }
+  .identity .studio-artwork {
+    object-position: 57% center;
+  }
+  .help-sticker {
+    left: 0;
+    top: 0;
+    width: 64px;
+  }
+  .contact-sticker {
+    right: -2vw;
+    bottom: -0.5svh;
+    width: clamp(170px, 48vw, 225px);
+  }
+  .identity-scene {
+    inset: 0.8svh 2vw;
+    border-radius: 8% / 4%;
+  }
+  .identity-expanded .studio-artwork {
+    object-position: 57% center;
+  }
+  .expanded-help {
+    left: 2vw;
+    top: 0.8svh;
+  }
+  .expanded-contact {
+    right: 0;
+    bottom: 0.3svh;
+  }
+  .teletext {
+    padding: 10svh 7vw 4svh;
+  }
+  .teletext .project-navigation {
+    margin-right: 0;
+    padding-bottom: 75px;
+  }
+  .help-scroll {
+    padding-bottom: 80px;
+  }
+  .project-card {
+    min-width: 30px;
+    min-height: 44px;
+  }
+  .board-broadcast {
+    width: 160vw;
+    left: -80vw;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crt-picture,
+  .identity-expanded .identity-art {
+    filter: none;
+  }
+  .identity-expanded .identity-art {
+    transform: none !important;
+  }
+  .project-card,
+  .project-card:hover {
+    filter: none;
+  }
+  .identity-expanded,
+  .identity-scene {
+    animation: none;
+  }
+}
+.identity-art picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.identity > h1,
+.identity > p {
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  margin: 0;
+}
+.identity-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  transform-origin: 0 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 2.5%;
+  background: #111;
+  filter: url(#crt-signal);
+}
+.identity-boot .identity-art {
+  height: 100%;
+  width: 100%;
+}
+.help-footer button {
+  color: var(--yellow);
+  font-size: 11px;
+  min-height: 44px;
+}
+@media (max-width: 700px) and (orientation: portrait), (max-aspect-ratio: 4/5) {
+  .board-world {
+    left: 50%;
+  }
+  .identity-boot .studio-artwork {
+    object-position: 57% center;
+  }
+}
+
+.project-card,
+.project-card:hover,
+.project-card:focus-visible {
+  filter: url(#crt-edge-signal) blur(0.4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card:hover {
+    filter: none;
+  }
+}
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+.portfolio {
+  position: relative;
+}
+@media (max-width: 700px) and (orientation: portrait), (max-aspect-ratio: 4/5) {
+  .project-card:nth-of-type(3) {
+    top: 62svh !important;
+    left: -38vw !important;
+  }
+}
+.crt-gpu {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 18;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: inherit;
+}
+.gpu-active > .crt-gpu {
+  opacity: 1;
+}
+.gpu-active .crt-picture {
+  filter: none;
+}
+.gpu-active .board .identity,
+.gpu-active .project-card,
+.gpu-active .board-broadcast,
+.gpu-active .identity-boot,
+.identity-scene.gpu-active > .identity-art {
+  opacity: 0 !important;
+}
+.gpu-active > .crt-texture,
+.gpu-active > .crt-lens,
+.gpu-active > .crt-glass,
+.gpu-active > .crt-scanlines {
+  visibility: hidden;
+}

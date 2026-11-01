@@ -1,0 +1,94 @@
+{
+  "profile": {
+    "name": "Ayush",
+    "role": "Creative Developer",
+    "introduction": "Hey, I’m Ayush. I make games, websites, and mobile apps.",
+    "supportingText": "I bring ideas to life through code, interaction, and a little experimentation. Explore my work, change the channel, and have a look around.",
+    "email": "",
+    "availability": "",
+    "socials": []
+  },
+  "projects": [
+    {
+      "id": "game-sample",
+      "channel": 1,
+      "title": "Little Worlds",
+      "category": "Games",
+      "description": "An original game concept: a tiny character in a world waiting to be explored.",
+      "sample": true,
+      "thumbnail": {
+        "src": "/assets/game.svg",
+        "alt": "Original pixel landscape with a friendly green character under a peach moon"
+      },
+      "images": [],
+      "technologies": [],
+      "position": {
+        "x": -800,
+        "y": 0,
+        "rotation": 0
+      },
+      "accent": "#c6ff8a",
+      "boardPreview": {
+        "src": "/assets/game-disc.svg",
+        "alt": "Sample games channel, a yellow pixel character on a black disc",
+        "width": 230,
+        "height": 230,
+        "shape": "disc"
+      }
+    },
+    {
+      "id": "web-sample",
+      "channel": 2,
+      "title": "Internet Playground",
+      "category": "Websites",
+      "description": "An original web concept exploring bold type, playful shapes, and unexpected interactions.",
+      "sample": true,
+      "thumbnail": {
+        "src": "/assets/web.svg",
+        "alt": "Original playful browser concept with bold typography and a coral star"
+      },
+      "images": [],
+      "technologies": [],
+      "position": {
+        "x": 780,
+        "y": 0,
+        "rotation": 0
+      },
+      "accent": "#f0ff60",
+      "boardPreview": {
+        "src": "/assets/web-phone.svg",
+        "alt": "Sample website concept presented in a phone browser",
+        "width": 160,
+        "height": 330,
+        "shape": "phone"
+      }
+    },
+    {
+      "id": "app-sample",
+      "channel": 3,
+      "title": "Pocket Pause",
+      "category": "Mobile apps",
+      "description": "An original mobile concept exploring a calmer little corner of the screen.",
+      "sample": true,
+      "thumbnail": {
+        "src": "/assets/app.svg",
+        "alt": "Original mobile interface concept with a smiling flower on a green phone"
+      },
+      "images": [],
+      "technologies": [],
+      "position": {
+        "x": -460,
+        "y": 650,
+        "rotation": 0
+      },
+      "accent": "#b7e5bc",
+      "boardPreview": {
+        "src": "/assets/app.svg",
+        "alt": "Original mobile interface concept with a smiling flower on a green phone",
+        "width": 250,
+        "height": 180,
+        "shape": "image"
+      }
+    }
+  ]
+}

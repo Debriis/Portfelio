@@ -1,0 +1,22 @@
+export const motion = {
+  startupMs: 1250,
+  channelMs: 360,
+  identityMs: 700,
+  minZoom: 0.45,
+  maxZoom: 2.2,
+  dragThreshold: 7,
+  wheelSensitivity: 0.0012,
+};
+export const crtSettings = {
+  curvature: 0.075,
+  maxPixels: 2400000,
+  maxDpr: 1.5,
+  chroma: 0.0022,
+  scanlines: 0.075,
+  grain: 0.009,
+};
+export const cursorMotion = {
+  distanceX: 11,
+  distanceY: 7,
+  follow: 7,
+};

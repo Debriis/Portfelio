@@ -1,0 +1,11 @@
+/* Shared visual timing and intensity. Interaction constants live in settings.ts. */
+:root {
+  --startup-duration: 1.25s;
+  --channel-duration: 0.36s;
+  --board-duration: 1.1s;
+  --card-duration: 0.9s;
+  --view-duration: 0.35s;
+  --ticker-duration: 28s;
+  --scanline-opacity: 0.16;
+  --entrance-ease: cubic-bezier(0.2, 0.7, 0.15, 1);
+}

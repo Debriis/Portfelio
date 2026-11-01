@@ -1,0 +1,16 @@
+.identity-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  isolation: isolate;
+  outline: none;
+  overflow: hidden;
+  --look-x: 0;
+  --look-y: 0;
+}
+.identity-scene {
+  position: absolute;
+  overflow: hidden;
+  transform-origin: 0 0;
+  will-change: transform;
+}
