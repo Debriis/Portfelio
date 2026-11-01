@@ -6,6 +6,9 @@ export const motion = {
   maxZoom: 2.2,
   dragThreshold: 7,
   wheelSensitivity: 0.0012,
+  // Temporary visual scale while holding the mouse/pen; user zoom is preserved.
+  dragPressScale: 0.95,
+  dragPressFollow: 16,
 };
 export const crtSettings = {
   curvature: 0.075,
@@ -16,7 +19,7 @@ export const crtSettings = {
   grain: 0.009,
 };
 export const cursorMotion = {
-  distanceX: 11,
-  distanceY: 7,
-  follow: 7,
+  distanceX: 15,
+  distanceY: 10,
+  follow: 9,
 };

@@ -9,6 +9,14 @@ export interface Point {
   y: number;
 }
 export const initialView: View = { x: 0, y: 0, scale: 1 };
+/** Decorative press depth: never writes back into the user's camera zoom. */
+export function pressedView(view: View, anchor: Point, factor: number): View {
+  return {
+    x: anchor.x + (view.x - anchor.x) * factor,
+    y: anchor.y + (view.y - anchor.y) * factor,
+    scale: view.scale * factor,
+  };
+}
 /** Same inverse barrel projection used by the CRT fragment shader. */
 export function throughGlass(
   point: Point,

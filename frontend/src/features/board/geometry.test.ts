@@ -1,6 +1,31 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { zoomAt, pinchView, passedDragThreshold } from "./geometry";
+import {
+  zoomAt,
+  pinchView,
+  passedDragThreshold,
+  pressedView,
+} from "./geometry";
+
+test("press depth preserves the grabbed point and restores the user's zoom", () => {
+  const camera = { x: 140, y: -70, scale: 1.7 };
+  const before = { ...camera },
+    anchor = { x: 220, y: 130 };
+  const held = pressedView(camera, anchor, 0.95);
+  assert(held.scale < camera.scale);
+  assert(
+    Math.abs(
+      (anchor.x - held.x) / held.scale - (anchor.x - camera.x) / camera.scale,
+    ) < 0.00001,
+  );
+  assert(
+    Math.abs(
+      (anchor.y - held.y) / held.scale - (anchor.y - camera.y) / camera.scale,
+    ) < 0.00001,
+  );
+  assert.deepEqual(camera, before);
+  assert.deepEqual(pressedView(camera, anchor, 1), before);
+});
 test("zoom keeps the world coordinate under the pointer stationary", () => {
   const view = { x: 42, y: -20, scale: 0.8 },
     point = { x: 300, y: 200 };

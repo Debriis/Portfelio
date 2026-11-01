@@ -92,3 +92,10 @@ Added a damped whole-screen translation toward a fine-pointer cursor, capped at 
 ### Fixed-frame refinement
 
 Cursor drift now targets only `.crt-picture`, leaving the CRT glass, borders and corner stickers stationary. Maximum travel increased to 11px horizontally and 7px vertically. Browser checks at left and right pointer positions returned identical frame bounds while the picture translation changed direction. Frontend TypeScript validation passed.
+
+### Hold zoom and increased cursor sensitivity
+
+Mouse/pen press now animates a separate visual zoom multiplier to 0.95 around the grabbed point; release returns it to 1 without changing the logical camera zoom. Browser checks observed the release transition and confirmed restoration at both 100% and 118% zoom, no dialog after dragging, and successful artwork opening. The frame transform stayed empty. Cursor travel is now 15px by 10px with follow rate 9. All 11 tests and TypeScript checks passed; the added test verifies anchor preservation and original camera/zoom restoration. Reduced-motion and touch exclusions are implemented but were not tested on physical hardware in this update.
+
+
+The later red/blue edge-glow experiment was reverted at the user’s request. The previous chromatic shader and intensity (0.0022) are restored; cursor motion and hold zoom are retained.

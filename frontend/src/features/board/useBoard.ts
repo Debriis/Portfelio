@@ -10,6 +10,7 @@ import {
   pinchView,
   passedDragThreshold,
   throughGlass,
+  pressedView,
 } from "./geometry";
 import type { View, Point } from "./geometry";
 import { motion } from "../../animations/settings";
@@ -20,6 +21,7 @@ export function useBoard(resetKey: number) {
     current = useRef<View>({ ...initialView }),
     target = useRef<View>({ ...initialView });
   const [view, publish] = useState(initialView);
+  const press = useRef({ scale: 1, eligible: false, anchor: { x: 0, y: 0 } });
   const pointers = useRef(new Map<number, Point>()),
     dragged = useRef(false),
     origin = useRef<Point | null>(null);
@@ -46,8 +48,15 @@ export function useBoard(resetKey: number) {
       world = node?.querySelector<HTMLElement>(".board-world");
     if (!node || !world) return;
     const v = current.current;
+    const rendered = pressedView(v, press.current.anchor, press.current.scale);
     world.style.transform =
-      "translate(" + v.x + "px," + v.y + "px) scale(" + v.scale + ")";
+      "translate(" +
+      rendered.x +
+      "px," +
+      rendered.y +
+      "px) scale(" +
+      rendered.scale +
+      ")";
     node.style.setProperty(
       "--pull-x",
       String(
@@ -75,6 +84,16 @@ export function useBoard(resetKey: number) {
       : 1 / 60;
     lastFrame.current = time;
     const bounds = limits();
+    const reduced = matchMedia("(prefers-reduced-motion:reduce)").matches;
+    const pressTarget =
+      !reduced && press.current.eligible && pointers.current.size === 1
+        ? motion.dragPressScale
+        : 1;
+    press.current.scale = reduced
+      ? 1
+      : press.current.scale +
+        (pressTarget - press.current.scale) *
+          (1 - Math.exp(-motion.dragPressFollow * dt));
     if (!pointers.current.size) {
       const flight = coast(velocity.current, dt);
       velocity.current = flight.velocity;
@@ -92,7 +111,7 @@ export function useBoard(resetKey: number) {
       if (Math.abs(target.current.x) >= bounds.x) velocity.current.x = 0;
       if (Math.abs(target.current.y) >= bounds.y) velocity.current.y = 0;
     }
-    current.current = matchMedia("(prefers-reduced-motion:reduce)").matches
+    current.current = reduced
       ? { ...target.current }
       : followCamera(current.current, target.current, dt);
     paint();
@@ -101,7 +120,8 @@ export function useBoard(resetKey: number) {
         target.current.x - current.current.x,
         target.current.y - current.current.y,
       ) +
-      Math.abs(target.current.scale - current.current.scale) * 1000;
+      Math.abs(target.current.scale - current.current.scale) * 1000 +
+      Math.abs(pressTarget - press.current.scale) * 1000;
     const speed = Math.hypot(velocity.current.x, velocity.current.y);
     if (element.current)
       element.current.dataset.motion = pointers.current.size
@@ -116,6 +136,7 @@ export function useBoard(resetKey: number) {
       (pointers.current.size || speed < cameraPhysics.stopSpeed)
     ) {
       current.current = { ...target.current };
+      press.current.scale = pressTarget;
       velocity.current = { x: 0, y: 0 };
       paint();
       publish({ ...current.current });
@@ -148,6 +169,8 @@ export function useBoard(resetKey: number) {
     cancel.current?.();
     cancel.current = null;
     pointers.current.clear();
+    press.current.scale = 1;
+    press.current.eligible = false;
     current.current = { ...initialView };
     target.current = { ...initialView };
     velocity.current = { x: 0, y: 0 };
@@ -159,6 +182,7 @@ export function useBoard(resetKey: number) {
     const node = element.current!;
     const wheel = (e: WheelEvent) => {
       e.preventDefault();
+      press.current.eligible = false;
       const r = node.getBoundingClientRect(),
         world = node.querySelector<HTMLElement>(".board-world")!,
         p = project({ x: e.clientX, y: e.clientY });
@@ -175,6 +199,8 @@ export function useBoard(resetKey: number) {
     };
     const stop = () => {
       pointers.current.clear();
+      press.current.scale = 1;
+      press.current.eligible = false;
       velocity.current = { x: 0, y: 0 };
       target.current = { ...current.current };
       cancel.current?.();
@@ -207,9 +233,20 @@ export function useBoard(resetKey: number) {
       origin.current = { x: e.clientX, y: e.clientY };
       dragged.current = false;
       lastMove.current = performance.now();
+      const node = element.current!,
+        r = node.getBoundingClientRect();
+      const world = node.querySelector<HTMLElement>(".board-world")!;
+      const p = project({ x: e.clientX, y: e.clientY });
+      press.current.anchor = {
+        x: p.x - r.left - world.offsetLeft,
+        y: p.y - r.top - world.offsetTop,
+      };
+      press.current.eligible = e.pointerType !== "touch";
     }
     pointers.current.set(e.pointerId, project({ x: e.clientX, y: e.clientY }));
+    if (pointers.current.size > 1) press.current.eligible = false;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    wake();
   };
   const move = (e: ReactPointerEvent) => {
     const old = pointers.current.get(e.pointerId);
